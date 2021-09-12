@@ -10,9 +10,7 @@ with open('filmes.csv', newline='') as csvfile:
 
 minutesPerDay = 240
 
-
-
-# seleciona filmes aleatórios e cria os primeiros cromossomos aleatoriamente.
+# seleciona filmes aleatórios e cria o primeiro cromossomo aleatoriamente
 # O primeiro filme a ser assistindo está no índice 0, o segundo no índice 1, e por aí vai...
 # a soma de tempo dos filmes não pode ser maior que 240.
 
