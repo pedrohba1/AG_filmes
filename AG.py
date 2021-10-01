@@ -39,16 +39,16 @@ def createsPop (n):
         pop.append(crm)
     return pop
         
-def countDays (c):
-    contHoras = 0
-    contDias = 0
+# def countDays (c):
+#     contHoras = 0
+#     contDias = 0
 
     
-    for idx in c:
-        row = filmesDict[idx]
-        hours = row[4]
-        print(hours)
-        countHours = countHoras + hours 
+#     for idx in c:
+#         row = filmesDict[idx]
+#         hours = row[4]
+#         print(hours)
+#         countHours = countHours + hours 
 
 generation = 4
 
