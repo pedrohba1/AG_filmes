@@ -1,12 +1,12 @@
 import csv
 import random
 
-filmesDict = {}
-with open('filmes.csv', newline='') as csvfile:
-    filmes = csv.reader(csvfile, delimiter=',', quotechar='|')
-    for idx, row in enumerate(filmes): 
-        # print(idx, row[4])
-        filmesDict[idx] = row
+# filmesDict = {}
+# with open('filmes.csv', newline='') as csvfile:
+#     filmes = csv.reader(csvfile, delimiter=',', quotechar='|')
+#     for idx, row in enumerate(filmes): 
+#         # print(idx, row[4])
+#         filmesDict[idx] = row
         
 
 # remove a primeira linha, que é referente a descrição do item da tabela
@@ -39,16 +39,7 @@ def createsPop (n):
         pop.append(crm)
     return pop
         
-def countDays (c):
-    contHoras = 0
-    contDias = 0
 
-    
-    for idx in c:
-        row = filmesDict[idx]
-        hours = row[4]
-        print(hours)
-        countHours = countHoras + hours 
 
 generation = 4
 
