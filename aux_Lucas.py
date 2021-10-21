@@ -1,5 +1,6 @@
 import csv
 import random
+# import numpy as np
 
 filmesDict = {}
 with open('filmes.csv', newline='') as csvfile:
@@ -31,13 +32,21 @@ def movie_name(cromossome, film):
         cromossome[i] = film[cromossome[i]]
     return cromossome
 
+def mutation(cromossome, prob):
+    prob_check = random.uniform(0, 1)
+    if prob <= prob_check:
+        change_positions = random.sample(range(0, len(cromossome)), 2)
+        cromossome[change_positions[0]], cromossome[change_positions[1]] = cromossome[change_positions[1]], cromossome[change_positions[0]]
+    return old_cromossome
+
 # print(movie_name(pop[0], filmesDict))
 
 for i in range(len(pop)):
     pop[i] = movie_name(pop[i], filmesDict)
 
-print(pop[0])
-print(len(pop[0]))
+# print(pop[0])
+# print(len(pop[0]))
+
 
 
 # print(movie_name(cromossome, filmesDict))
