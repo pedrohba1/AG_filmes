@@ -26,7 +26,6 @@ def createsPop (n):
         pop.append(lista)
     return pop
 
-pop = createsPop(2)
 def movie_name(cromossome, film):
     for i in range(len(cromossome)):
         cromossome[i] = film[cromossome[i]]
@@ -41,8 +40,28 @@ def mutation(cromossome, prob):
 
 # print(movie_name(pop[0], filmesDict))
 
+def new_mutation(pop, prob):
+    list_new_cromossome = []
+    for i in pop:
+        prob_check = random.uniform(0, 1)
+        if prob <= prob_check:
+            new_cromossome = i.copy()
+            change_positions = random.sample(range(0, len(i)), 2)
+            print(i[change_positions[0]], i[change_positions[1]])
+            new_cromossome[change_positions[0]], new_cromossome[change_positions[1]] = new_cromossome[change_positions[1]], new_cromossome[change_positions[0]]
+            list_new_cromossome.append(new_cromossome)
+    return list_new_cromossome
+
+pop = createsPop(5)
+
 for i in range(len(pop)):
     pop[i] = movie_name(pop[i], filmesDict)
+
+list_new_cromossome = new_mutation(pop, 0.5)
+
+print(len(list_new_cromossome))
+print(pop[0])
+print(list_new_cromossome[0])
 
 # print(pop[0])
 # print(len(pop[0]))
