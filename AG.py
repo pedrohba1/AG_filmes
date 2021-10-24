@@ -32,7 +32,7 @@ def createsPop (n):
                 rand = random.randint(1,total)
             aux.append(rand)
             crm.append(rand)
-            crm = restriction(crm)
+        crm = restriction(crm)
         pop.append(crm)
     return pop
 
@@ -68,24 +68,55 @@ def mutation(cromossome, prob):
         cromossome = restriction(cromossome)
     # return cromossome
 
-populacao = createsPop(1)
-print('pt1: ', populacao)
-mutation(populacao[0], 0.4)
-print('pt2: ', populacao)
+def new_mutation(pop, prob):
+    list_new_cromossome = []
+    for i in pop:
+        prob_check = random.uniform(0, 1)
+        if prob >= prob_check:
+            new_cromossome = i.copy()
+            change_positions = random.sample(range(0, len(i)), 2)
+            #print(i[change_positions[0]], i[change_positions[1]])
+            new_cromossome[change_positions[0]], new_cromossome[change_positions[1]] = new_cromossome[change_positions[1]], new_cromossome[change_positions[0]]
+            list_new_cromossome.append(new_cromossome)
+    return list_new_cromossome
+
 
 generation = 4
-pop = createsPop(3)
-bestCrm = 1000
-fitnessPop = []
-MutatedCrm = []
+pop = createsPop(2)
+print('pop: ', pop)
 
 for x in range(generation):
+    MutatedCrm = []
+    fitnessPop = []
+    print('generation: ', x)
+    
+    MutatedCrm = new_mutation(pop, 0.1)
+    print('MutatedCRM: ', MutatedCrm)
+    nMutated = len(MutatedCrm)
+    print('nMutated', nMutated)
+    pop.extend(MutatedCrm)
+    print('extended pop: ', pop)
+    
     for crm in pop:
-        MutatedCrm = mutation(crm, 0.4)
         fitnessPop.append(fitness(crm))
+    print('fitnessPopLen: ', len(fitnessPop))
+    print('fitnessPop: ', fitnessPop)
+
+    for y in range(nMutated):
+        worstCrm = max(fitnessPop)
+        print('worst: ', worstCrm)
+        worstCrmIndex = fitnessPop.index(worstCrm)
+        print('worstIndex:  ', worstCrmIndex)
+        pop.pop(worstCrmIndex)
+        print('pop-index: ', pop)
+        fitnessPop.pop(worstCrmIndex)
+        print('fitnessPop-index: ',fitnessPop)
     
     bestCrm = min(fitnessPop)
-    print('Melhor cromossomo da geração: ', bestCrm)
+    bestCrmIndex = fitnessPop.index(bestCrm)
+    print('Melhor cromossomo da geração: ', pop[bestCrmIndex])
+    print('Quantidade de dias: ', bestCrm)
 
-print("Melhor cromossomo final: ", bestCrm)
+print('Melhor cromossomo final: ', pop[bestCrmIndex])
+print('Quantidade de dias final: ', bestCrm)
 
