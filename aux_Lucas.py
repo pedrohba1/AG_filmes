@@ -34,7 +34,7 @@ def fitness (c, time):
     #filmes e a soma dos gêneros que é possível assistir em um único dia
 
     countHours = 0
-    countDays = 0
+    countDays = 1
     films_per_day = []
     list_genres = []
 
@@ -98,29 +98,33 @@ def bestCromossome(fitnessPop):
     crm = sorted(fitnessPop, key=lambda tup: tup[1], reverse=True)[-1]
     return crm
 
-def diary(crm, time):
-    countDays = 0
+def diary(crm, bestDays, time):
+
+    countDays = 1
     countHours = 0
-    print("\n\n\nDiario de Filmes:")
-    for i in crm:
+    print("\n\nDiario de Filmes:")
+    print('\n================\n')
+    print("Dia 1:\n")
+    for i in crm:       
         row = filmesDict[i]
         film, duration, gen1, gen2 = row[0], int(row[1]), row[2], row[3]
         countHours = countHours + duration
-        if countHours > time:
+        if countHours > time:        
             countHours = duration
             countDays = countDays + 1
             print('\n================\n')
             print("Dia " + str(countDays) + ":\n")
         else:
             print('')
+        
         print("Filme: ", film)
         print("Duracao: ", duration)
         print("Genero:", gen1, gen2)
 
 total = 93
 time = 240
-generation = 20
-pop = createsPop(20)
+generation = 4
+pop = createsPop(3)
 # print('pop:', pop)
 
 for x in range(generation):
@@ -163,4 +167,4 @@ print('Melhor cromossomo final: ', pop[bestCrmIndex])
 print('Quantidade de dias final: ', bestCrm[0])
 print('Quantidade de generos diferentes por dia final: ', bestCrm[1])
 
-diary(pop[bestCrmIndex], time)
+diary(pop[bestCrmIndex], bestCrm[0], time)
