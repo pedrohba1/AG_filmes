@@ -30,6 +30,9 @@ def restriction(crm):
     return crm
 
 def fitness (c, time):
+    #A funcao fitness calcula quantidade de dias que demoram para assistir todos os 
+    #filmes e a soma dos gêneros que é possível assistir em um único dia
+
     countHours = 0
     countDays = 0
     films_per_day = []
@@ -51,6 +54,8 @@ def fitness (c, time):
     return (countDays, sum(list_genres))
 
 def genre(films):
+    # Retorna a quantidade de generos diferentes assistidos em um dia
+
     genres = []
     for i in films:
         genres.append(filmesDict[i][2])
@@ -72,13 +77,21 @@ def mutation(pop, prob):
     return list_new_cromossome
 
 def worstCromossome(fitnessPop):
+    #Pior Cromossomo: 1º: Mais dias, 2º: Menos gêneros
+
+    #Sort Decrescente do 1º valor da tupla do fitnessPop
     fitnessPop = sorted(fitnessPop, key=lambda tup: tup[0], reverse=True)
+    #Pegar os dias do pior cromossomo
     maxfit = fitnessPop[0][0]
+    #Cortar a lista para pegar todos os cromossomos com pior dia
     fitnessPop = [i for i in fitnessPop if i[0] == maxfit]
+    #Pegar o cromossomo com menor quantidade de gêneros somados
     crm = sorted(fitnessPop, key=lambda tup: tup[1])[0]
     return crm
 
 def bestCromossome(fitnessPop):
+    #Melhor cromossomo: 1º Menos dias, 2º Mais gêneros
+
     fitnessPop = sorted(fitnessPop, key=lambda tup: tup[0])
     minfit = fitnessPop[0][0]
     fitnessPop = [i for i in fitnessPop if i[0] == minfit]
@@ -86,7 +99,7 @@ def bestCromossome(fitnessPop):
     return crm
 
 def diary(crm, time):
-    countDays = 1
+    countDays = 0
     countHours = 0
     print("\n\n\nDiario de Filmes:")
     for i in crm:
@@ -97,7 +110,7 @@ def diary(crm, time):
             countHours = duration
             countDays = countDays + 1
             print('\n================\n')
-            print("Dia " + str(countDays) + ":")
+            print("Dia " + str(countDays) + ":\n")
         else:
             print('')
         print("Filme: ", film)
@@ -106,9 +119,9 @@ def diary(crm, time):
 
 total = 93
 time = 240
-generation = 10
-pop = createsPop(5)
-print('pop:', pop)
+generation = 20
+pop = createsPop(20)
+# print('pop:', pop)
 
 for x in range(generation):
     MutatedCrm = []
@@ -139,7 +152,8 @@ for x in range(generation):
         fitnessPop.pop(worstCrmIndex)
         # print('fitnessPop-index: ',fitnessPop)
     
-    bestCrm = min(fitnessPop)
+    # bestCrm = min(fitnessPop)
+    bestCrm = bestCromossome(fitnessPop)
     bestCrmIndex = fitnessPop.index(bestCrm)
     print('Melhor cromossomo da geração: ', pop[bestCrmIndex])
     print('Quantidade de dias: ', bestCrm[0])
