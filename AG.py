@@ -9,15 +9,6 @@ with open('filmes.csv', newline='') as csvfile:
         filmesDict[idx] = row
         
 
-# remove a primeira linha, que é referente a descrição do item da tabela
-
-#filmesDict.pop(0, None)
-#minutesPerDay = 240
-
-# seleciona filmes aleatórios e cria o primeiro cromossomo aleatoriamente
-# O primeiro filme a ser assistindo está no índice 0, o segundo no índice 1, e por aí vai...
-# a soma de tempo dos filmes não pode ser maior que 240.
-
 
 total = 93
 
@@ -59,14 +50,7 @@ def fitness (c):
     
     return countDays
 
-def mutation(cromossome, prob):
-    prob_check = random.uniform(0, 1)
-    if prob <= prob_check:
-        change_positions = random.sample(range(0, len(cromossome)), 2)
-        print('posicao: ',change_positions)
-        cromossome[change_positions[0]], cromossome[change_positions[1]] = cromossome[change_positions[1]], cromossome[change_positions[0]]
-        cromossome = restriction(cromossome)
-    # return cromossome
+
 
 def new_mutation(pop, prob):
     list_new_cromossome = []
@@ -81,36 +65,36 @@ def new_mutation(pop, prob):
     return list_new_cromossome
 
 
-generation = 4
-pop = createsPop(2)
-print('pop: ', pop)
+generation = 8000
+pop = createsPop(500)
+#print('pop: ', pop)
 
 for x in range(generation):
     MutatedCrm = []
     fitnessPop = []
     print('generation: ', x)
     
-    MutatedCrm = new_mutation(pop, 0.1)
-    print('MutatedCRM: ', MutatedCrm)
+    MutatedCrm = new_mutation(pop, 0.4)
+    #print('MutatedCRM: ', MutatedCrm)
     nMutated = len(MutatedCrm)
-    print('nMutated', nMutated)
+    #print('nMutated', nMutated)
     pop.extend(MutatedCrm)
-    print('extended pop: ', pop)
+    #print('extended pop: ', pop)
     
     for crm in pop:
         fitnessPop.append(fitness(crm))
-    print('fitnessPopLen: ', len(fitnessPop))
-    print('fitnessPop: ', fitnessPop)
+    #print('fitnessPopLen: ', len(fitnessPop))
+    #print('fitnessPop: ', fitnessPop)
 
     for y in range(nMutated):
         worstCrm = max(fitnessPop)
-        print('worst: ', worstCrm)
+        #print('worst: ', worstCrm)
         worstCrmIndex = fitnessPop.index(worstCrm)
-        print('worstIndex:  ', worstCrmIndex)
+        #print('worstIndex:  ', worstCrmIndex)
         pop.pop(worstCrmIndex)
-        print('pop-index: ', pop)
+        #print('pop-index: ', pop)
         fitnessPop.pop(worstCrmIndex)
-        print('fitnessPop-index: ',fitnessPop)
+        #print('fitnessPop-index: ',fitnessPop)
     
     bestCrm = min(fitnessPop)
     bestCrmIndex = fitnessPop.index(bestCrm)
