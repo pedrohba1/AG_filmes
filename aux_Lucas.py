@@ -73,6 +73,7 @@ def mutation(pop, prob):
             new_cromossome = i.copy()
             change_positions = sample(range(0, len(i)), 2)
             new_cromossome[change_positions[0]], new_cromossome[change_positions[1]] = new_cromossome[change_positions[1]], new_cromossome[change_positions[0]]
+            new_cromossome = restriction(new_cromossome)
             list_new_cromossome.append(new_cromossome)
     return list_new_cromossome
 
@@ -123,8 +124,8 @@ def diary(crm, bestDays, time):
 
 total = 93
 time = 240
-generation = 4
-pop = createsPop(3)
+generation = 200
+pop = createsPop(500)
 # print('pop:', pop)
 
 for x in range(generation):
@@ -143,12 +144,12 @@ for x in range(generation):
     for crm in pop:
         fitnessPop.append(fitness(crm, time))
     # print('fitnessPopLen: ', len(fitnessPop))
-    print('fitnessPop: ', fitnessPop)
+    # print('fitnessPop: ', fitnessPop)
 
     for y in range(nMutated):
         # worstCrm = max(fitnessPop)
         worstCrm = worstCromossome(fitnessPop)
-        print('worst: ', worstCrm)
+        # print('worst: ', worstCrm)
         worstCrmIndex = fitnessPop.index(worstCrm)
         # print('worstIndex:  ', worstCrmIndex)
         pop.pop(worstCrmIndex)
