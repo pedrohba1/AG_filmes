@@ -37,7 +37,7 @@ def restriction(crm):
         
 def fitness (c):
     countHours = 0
-    countDays = 0
+    countDays = 1
 
     
     for idx in c:

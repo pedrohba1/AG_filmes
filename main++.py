@@ -124,7 +124,7 @@ def diary(crm, bestDays, time):
 
 total = 93
 time = 240
-generation = 200
+generation = 600
 pop = createsPop(500)
 # print('pop:', pop)
 
@@ -134,7 +134,7 @@ for x in range(generation):
     print('\n================\n')
     print('generation: ', x)
     
-    MutatedCrm = mutation(pop, 1)
+    MutatedCrm = mutation(pop, 0.6)
     # print('MutatedCRM: ', MutatedCrm)
     nMutated = len(MutatedCrm)
     # print('nMutated', nMutated)
