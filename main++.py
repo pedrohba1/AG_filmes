@@ -1,5 +1,9 @@
 from csv import reader
 from random import randint, uniform, sample
+import time as timer
+
+start = timer.time()
+
 
 filmesDict = {}
 with open('filmes.csv', newline='') as csvfile:
@@ -168,4 +172,11 @@ print('Melhor cromossomo final: ', pop[bestCrmIndex])
 print('Quantidade de dias final: ', bestCrm[0])
 print('Quantidade de generos diferentes por dia final: ', bestCrm[1])
 
+
+
+
 diary(pop[bestCrmIndex], bestCrm[0], time)
+
+end = timer.time()
+
+print(f"Runtime of the program is {end - start}")
