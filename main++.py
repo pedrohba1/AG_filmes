@@ -27,10 +27,10 @@ def createsPop (n):
     return pop
 
 def restriction(crm):
-    if (crm.index(13) < crm.index(36)):
-        aux2 = crm.index(36)
-        crm[crm.index(13)] = 36
-        crm[aux2] = 13
+    if (crm.index(12) < crm.index(35)):
+        aux2 = crm.index(35)
+        crm[crm.index(12)] = 35
+        crm[aux2] = 12
     return crm
 
 def fitness (c, time):
