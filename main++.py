@@ -34,27 +34,39 @@ def restriction(crm):
     return crm
 
 def fitness (c, time):
-    #A funcao fitness calcula quantidade de dias que demoram para assistir todos os 
-    #filmes e a soma dos gêneros que é possível assistir em um único dia
+    #A funcao fitness recebe um cromossomo e o tempo diário limite (no caso 4 horas) e calcula a quantidade 
+    # de dias necessários para assistir aos filmes do cromossomo crm e a soma da diversidade diária 
+    # de gêneros
 
+    #contador de horas
     countHours = 0
+    #contador de dias
     countDays = 1
+    #listas para controle de diversidade diária de gêneros
     films_per_day = []
     list_genres = []
-
+    #para cada filme do cromossomo
     for idx in c:
+        #recupera tempo de durção do filme
         row = filmesDict[idx]
         hours = int(row[1])
+        #acrescenta este tempo de duração ao contador de horas
         countHours = countHours + hours
+        #se o contador passa do tempo limite
         if countHours > time:
+            #contador de horas é igualado ao tempo de duração do filme (filme atual entra no dia seguinte)
             countHours = hours
+            #contador de dias é incrementado
             countDays = countDays + 1
+            #retorna a quantidade diferentes de gênero deste dia
             genres = genre(films_per_day)
+            #acrescenta esta quantidade à lista de diversidade diária de gêneros
             list_genres.append(genres)
             films_per_day = []
+        #cai no else se o contador não passou ainda do tempo limite
         else:
             films_per_day.append(idx)
-    
+    #retorna o número de dias do cromossomo e a soma da diversidade diária de gêneros
     return (countDays, sum(list_genres))
 
 def genre(films):
@@ -82,15 +94,16 @@ def mutation(pop, prob):
     return list_new_cromossome
 
 def worstCromossome(fitnessPop):
-    #Pior Cromossomo: 1º: Mais dias, 2º: Menos gêneros
+    # O pior indivíduo é aquele com, primeiramente, um maior número de dias e, segundamente, uma menor 
+    # diversidade diária de gêneros
 
-    #Sort Decrescente do 1º valor da tupla do fitnessPop
+    #Ordena decrescentemente a lista de fitness com base no número de dias
     fitnessPop = sorted(fitnessPop, key=lambda tup: tup[0], reverse=True)
-    #Pegar os dias do pior cromossomo
+    #Recupera o maior número de dias presente na população
     maxfit = fitnessPop[0][0]
-    #Cortar a lista para pegar todos os cromossomos com pior dia
+    #Recupera todos os indivíduos com o pior número de dias
     fitnessPop = [i for i in fitnessPop if i[0] == maxfit]
-    #Pegar o cromossomo com menor quantidade de gêneros somados
+    #Recupera, dentre os indivíduos com o pior número de dias, o com a menor diversidade diárira de gêneros
     crm = sorted(fitnessPop, key=lambda tup: tup[1])[0]
     return crm
 
