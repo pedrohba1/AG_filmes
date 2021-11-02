@@ -81,16 +81,24 @@ def genre(films):
         genres.remove('')
     return len(genres)
 
+#recebe a população pop e uma probabilidade prob
 def mutation(pop, prob):
     list_new_cromossome = []
+    #para cada cromossomo da população
     for i in pop:
+        #uma probabilidade entre 0 e 1 é gerada
         prob_check = uniform(0, 1)
+        #se prob menor ou igual à probabilidade gerada acima
         if prob >= prob_check:
+            #uma cópia de cromossomo é gerada
             new_cromossome = i.copy()
+            #esta cópia é mutada
             change_positions = sample(range(0, len(i)), 2)
             new_cromossome[change_positions[0]], new_cromossome[change_positions[1]] = new_cromossome[change_positions[1]], new_cromossome[change_positions[0]]
             new_cromossome = restriction(new_cromossome)
+            #esta cópia mutada é acrescentada à lista list_new_cromossome
             list_new_cromossome.append(new_cromossome)
+    #lista com as cópias mutadas dos cromossomos é retornada
     return list_new_cromossome
 
 def worstCromossome(fitnessPop):
@@ -101,18 +109,23 @@ def worstCromossome(fitnessPop):
     fitnessPop = sorted(fitnessPop, key=lambda tup: tup[0], reverse=True)
     #Recupera o maior número de dias presente na população
     maxfit = fitnessPop[0][0]
-    #Recupera todos os indivíduos com o pior número de dias
+    #Recupera todos os indivíduos com o maior número de dias
     fitnessPop = [i for i in fitnessPop if i[0] == maxfit]
-    #Recupera, dentre os indivíduos com o pior número de dias, o com a menor diversidade diárira de gêneros
+    #Recupera, dentre os indivíduos com o maior número de dias, o com a menor diversidade diárira de gêneros
     crm = sorted(fitnessPop, key=lambda tup: tup[1])[0]
     return crm
 
 def bestCromossome(fitnessPop):
-    #Melhor cromossomo: 1º Menos dias, 2º Mais gêneros
+    # O melhor indivíduo é aquele com, primeiramente, um menor número de dias e, segundamente, uma maior 
+    # diversidade diária de gêneros
 
+    #Ordena crescentemente a lista de fitness com base no número de dias
     fitnessPop = sorted(fitnessPop, key=lambda tup: tup[0])
+    #Recupera o menor número de dias presente na população
     minfit = fitnessPop[0][0]
+    #Recupera todos os indivíduos com o menor número de dias
     fitnessPop = [i for i in fitnessPop if i[0] == minfit]
+    #Recupera, dentre os indivíduos com o menor número de dias, o com a maior diversidade diárira de gêneros
     crm = sorted(fitnessPop, key=lambda tup: tup[1], reverse=True)[-1]
     return crm
 
